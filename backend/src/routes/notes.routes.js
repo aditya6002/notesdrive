@@ -1,30 +1,23 @@
+// Packages
 const express = require("express");
 const router = express.Router();
 
-router.post("/", (req, res) => {
-  res.status(201).json({ msg: "new note created", data: req.body });
-});
+const noteController = require("../controllers/notes.controller");
+
+// Create new note
+router.post("/", noteController.getNote);
 
 router
-  .route("/:noteId")
-  .get((req, res) => {
-    res.status(200).json({ msg: "note found", data: "note" });
-  })
+    .route("/:noteId")
+    // GET, PUT, DELETE
+    .get(noteController.getNote)
+    .put(noteController.editNote)
+    .delete(noteController.deleteNote);
 
-  .put((req, res) => {
-    res.status(200).json({ msg: "note updated", data: "deleted note" });
-  })
+// Show Shared note
+router.get("/shared/:noteId", noteController.showShareNote);
 
-  .delete((req, res) => {
-    res.status(200).json({ msg: "note deleted" });
-  });
-
-router.get("/shared/:noteId", (req, res) => {
-  res.status(200).json({ msg: "shared note found", data: "shared note" });
-});
-
-router.post("/report/:noteId", (req, res) => {
-  res.status(200).json({ msg: "note reported", data: "reported note" });
-});
+// Report Note
+router.post("/report/:noteId", noteController.reportNote);
 
 module.exports = router;

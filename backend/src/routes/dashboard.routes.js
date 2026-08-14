@@ -1,9 +1,17 @@
+// Packages
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.status(200).json({ msg: "request sent", data: "dashboard" });
-});
+//  Dashboard Controllers
+const dashboardController = require("../controllers/dashboard.controller");
+
+// Dashboard data route
+router.get("/", dashboardController.dashboardData);
+
+
+
+
+
 
 
 module.exports = router;
