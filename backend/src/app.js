@@ -1,8 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
-
 const app = express();
-
 dotenv.config();
+
+app.use("/dashboard", require("./routes/dashboard.routes"));
+app.use("/notes", require("./routes/notes.routes"));
 
 module.exports = app;
