@@ -1,3 +1,6 @@
+const noteModel = require("../models/Note.model");
+
+
 const newNote = (req, res) => {
   res.status(201).json({ msg: "new note created", data: req.body });
 };
