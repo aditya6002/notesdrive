@@ -13,7 +13,6 @@ const {
 const fileValidator = require("../middleware/file.middleware");
 
 // Controllers
-
 const noteController = require("../controllers/notes.controller");
 
 // Create new note
