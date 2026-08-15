@@ -1,7 +1,7 @@
 const noteModel = require("../models/Note.model");
 
 
-const newNote = (req, res) => {
+const createNote = (req, res) => {
   res.status(201).json({ msg: "new note created", data: req.body });
 };
 
@@ -26,7 +26,7 @@ const reportNote = (req, res) => {
 };
 
 module.exports = {
-  newNote,
+  createNote,
   getNote,
   editNote,
   deleteNote,

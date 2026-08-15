@@ -3,17 +3,17 @@ const mongoose = require("mongoose");
 
 const noteSchema = new mongoose.Schema({
     title: {
-        require: true,
+        required: true,
         type: String,
         min: 3,
         max: 200,
     },
-    content: {
-        require: true,
+    file: {
+        required: true,
         type: String,
     },
     tags: {
-        require: true,
+        required: true,
         type: Array,
         min: 1,
         max: 10,
