@@ -10,7 +10,7 @@ const getNote = (req, res) => {
 };
 
 const editNote = (req, res) => {
-  res.status(200).json({ msg: "note updated", data: "deleted note" });
+  res.status(200).json({ msg: "note updated", data: "edited note" });
 };
 
 const deleteNote = (req, res) => {

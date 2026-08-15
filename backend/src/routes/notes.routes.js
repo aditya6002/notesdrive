@@ -7,7 +7,8 @@ const upload = require("../utils/file.utils");
 // Middleware
 const {
   validate,
-  notesValidator,
+  newNotesValidator,
+  noteGetValidator,
 } = require("../middleware/validators.middleware");
 const fileValidator = require("../middleware/file.middleware");
 
@@ -20,7 +21,7 @@ router.post(
   "/",
   upload.single("file"),
   fileValidator,
-  notesValidator,
+  newNotesValidator,
   validate,
   noteController.createNote,
 );
@@ -28,14 +29,30 @@ router.post(
 router
   .route("/:noteId")
   // GET, PUT, DELETE
-  .get(noteController.getNote)
-  .put(upload.single("file"), notesValidator, validate, noteController.editNote)
-  .delete(noteController.deleteNote);
+  .get(noteGetValidator, validate, noteController.getNote)
+  .put(
+    upload.single("file"),
+    fileValidator,
+    newNotesValidator,
+    validate,
+    noteController.editNote,
+  )
+  .delete(noteGetValidator, validate, noteController.deleteNote);
 
 // Show Shared note
-router.get("/shared/:noteId", noteController.showShareNote);
+router.get(
+  "/shared/:noteId",
+  noteGetValidator,
+  validate,
+  noteController.showShareNote,
+);
 
 // Report Note
-router.post("/report/:noteId", noteController.reportNote);
+router.post(
+  "/report/:noteId",
+  noteGetValidator,
+  validate,
+  noteController.reportNote,
+);
 
 module.exports = router;

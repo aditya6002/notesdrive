@@ -13,7 +13,7 @@ const validate = (req, res, next) => {
   next();
 };
 
-const notesValidator = [
+const newNotesValidator = [
   body("title")
     .isString()
     .trim()
@@ -25,4 +25,8 @@ const notesValidator = [
     .withMessage("Tags must be an array with at least 1 and at most 10 tags"),
 ];
 
-module.exports = { validate, notesValidator };
+const noteGetValidator = [
+  body("noteId").isMongoId().withMessage("Invalid note ID"),
+];
+
+module.exports = { validate, newNotesValidator, noteGetValidator };
