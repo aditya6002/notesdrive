@@ -1,19 +1,7 @@
-const { validationResult } = require("express-validator");
+const { validator } = require("../utils/validator.utils");
 const { body } = require("express-validator");
 
-const validate = (req, res, next) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
-      errors: errors.array(),
-    });
-  }
-  next();
-};
-
-const notesValidator = [
+const newNotesValidator = [
   body("title")
     .isString()
     .trim()
@@ -25,4 +13,8 @@ const notesValidator = [
     .withMessage("Tags must be an array with at least 1 and at most 10 tags"),
 ];
 
-module.exports = { validate, notesValidator };
+const noteGetValidator = [
+  body("noteId").isMongoId().withMessage("Invalid note ID"),
+];
+
+module.exports = { validator, newNotesValidator, noteGetValidator };

@@ -6,36 +6,57 @@ const upload = require("../utils/file.utils");
 
 // Middleware
 const {
-  validate,
-  notesValidator,
+  validator,
+  newNotesValidator,
+  noteGetValidator,
 } = require("../middleware/validators.middleware");
 const fileValidator = require("../middleware/file.middleware");
 
 // Controllers
-
 const noteController = require("../controllers/notes.controller");
 
-// Create new note
+/**
+ * @route POST /notes
+ * @description Create new note
+ * @body {title:'String',tags:[],description:'string',file:'file'}
+ * @protected
+ */
 router.post(
   "/",
   upload.single("file"),
   fileValidator,
-  notesValidator,
-  validate,
+  newNotesValidator,
+  validator,
   noteController.createNote,
 );
 
 router
   .route("/:noteId")
   // GET, PUT, DELETE
-  .get(noteController.getNote)
-  .put(upload.single("file"), notesValidator, validate, noteController.editNote)
-  .delete(noteController.deleteNote);
+  .get(noteGetValidator, validator, noteController.getNote)
+  .put(
+    upload.single("file"),
+    fileValidator,
+    newNotesValidator,
+    validator,
+    noteController.editNote,
+  )
+  .delete(noteGetValidator, validator, noteController.deleteNote);
 
 // Show Shared note
-router.get("/shared/:noteId", noteController.showShareNote);
+router.get(
+  "/shared/:noteId",
+  noteGetValidator,
+  validator,
+  noteController.showShareNote,
+);
 
 // Report Note
-router.post("/report/:noteId", noteController.reportNote);
+router.post(
+  "/report/:noteId",
+  noteGetValidator,
+  validator,
+  noteController.reportNote,
+);
 
 module.exports = router;
