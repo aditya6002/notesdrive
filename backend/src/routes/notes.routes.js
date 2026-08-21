@@ -15,7 +15,12 @@ const fileValidator = require("../middleware/file.middleware");
 // Controllers
 const noteController = require("../controllers/notes.controller");
 
-// Create new note
+/**
+ * @route POST /notes
+ * @description Create new note
+ * @body {title:'String',tags:[],description:'string',file:'file'}
+ * @protected
+ */
 router.post(
   "/",
   upload.single("file"),
