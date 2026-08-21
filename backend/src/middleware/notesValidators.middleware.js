@@ -9,8 +9,11 @@ const newNotesValidator = [
     .withMessage("Title is required and must be between 3 and 200 characters"),
   body("tags")
     .trim()
-    .isArray({ min: 1, max: 10 })
-    .withMessage("Tags must be an array with at least 1 and at most 10 tags"),
+    .isString()
+    .isLength({ min: 0, max: 100 })
+    .withMessage(
+      "Tags must be a string with a maximum length of 100 characters",
+    ),
 ];
 
 const noteGetValidator = [

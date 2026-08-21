@@ -1,11 +1,15 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const multer = require("multer");
 const { sendEmail } = require("./services/email.service");
 const app = express();
 dotenv.config();
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(multer().none());
+
 
 // Routes
 app.use("/dashboard", require("./routes/dashboard.routes"));

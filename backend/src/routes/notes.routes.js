@@ -1,7 +1,6 @@
 // Packages
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
 const upload = require("../utils/file.utils");
 
 // Middleware
@@ -9,7 +8,7 @@ const {
   validator,
   newNotesValidator,
   noteGetValidator,
-} = require("../middleware/validators.middleware");
+} = require("../middleware/notesValidators.middleware");
 const fileValidator = require("../middleware/file.middleware");
 
 // Controllers

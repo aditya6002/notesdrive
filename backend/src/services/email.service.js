@@ -25,13 +25,13 @@ const transporter = nodeMailer.createTransport({
   },
 });
 
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("Error in email transporter: ", error);
-  } else {
-    console.log("Email transporter is ready to send emails!");
-  }
-});
+// transporter.verify((error, success) => {
+//   if (error) {
+//     console.error("Error in email transporter: ", error);
+//   } else {
+//     console.log("Email transporter is ready to send emails!");
+//   }
+// });
 
 /**
  * Generic email sender
