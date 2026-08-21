@@ -1,17 +1,5 @@
-const { validationResult } = require("express-validator");
+const { validator } = require("../utils/validator.utils");
 const { body } = require("express-validator");
-
-const validate = (req, res, next) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
-      errors: errors.array(),
-    });
-  }
-  next();
-};
 
 const newNotesValidator = [
   body("title")
@@ -29,4 +17,4 @@ const noteGetValidator = [
   body("noteId").isMongoId().withMessage("Invalid note ID"),
 ];
 
-module.exports = { validate, newNotesValidator, noteGetValidator };
+module.exports = { validator, newNotesValidator, noteGetValidator };
