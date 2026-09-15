@@ -33,6 +33,14 @@ transporter.verify((error, success) => {
   }
 });
 
+const otpStore = new Map();
+
+const generateOtp = ()=>{
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  return otp;
+}
+
+
 /**
  * Generic email sender
  */
@@ -95,7 +103,38 @@ NoteDrive Team
   await sendEmail(userEmail, subject, text, html);
 }
 
+/**
+ * @description Send password reset email
+ */
+async function sendPasswordResetEmail(userEmail,name){
+  const otp = generateOtp();
+  otpStore.set(userEmail, otp); 
+  console.log("Generated OTP:", otp);
+
+  const subject = "Password Reset Request";
+  const text = `Hello ${name},
+  This is your otp for password reset: ${otp}
+  We received a request to reset your password. If you did not make this request, please ignore this email.
+  `;
+  const html = `
+    <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
+      <div style="max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px;">
+        <h2 style="color:#333;">Password Reset Request</h2>
+        <p>Hello <b>${name}</b>,</p>
+        <p>This is your OTP for password reset: <b>${otp}</b></p>
+        <p>We received a request to reset your password. If you did not make this request, please ignore this email.</p>
+        <p>Best Regards,<br><b>The NoteDrive Team</b></p>
+      </div>
+    </div>
+  `;
+
+  await sendEmail(userEmail, subject, text, html);
+  return otp;
+}
+
 module.exports = {
   sendEmail,
   sendRegistrationEmail,
+  sendPasswordResetEmail, 
+  otpStore
 };
