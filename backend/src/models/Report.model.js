@@ -1,18 +1,24 @@
 const mongoose = require("mongoose");
 
-const noteSchema = new mongoose.Schema(
+const reportSchema = new mongoose.Schema(
   {
-    title: {
+    reportDescription: {
       required: true,
       type: String,
       min: 3,
       max: 200,
     },
-    file: {
+    reportFileTitle: {
+      required: true,
+      type: String,
+      min: 3,
+      max: 200,
+    },
+    reportFile: {
       required: true,
       type: String,
     },
-    tags: {
+    reportFileTags: {
       required: true,
       type: Array,
       min: 1,
@@ -27,4 +33,4 @@ const noteSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-module.exports = mongoose.model("noteModel", noteSchema);
+module.exports = mongoose.model("reportModel", reportSchema);

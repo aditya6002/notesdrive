@@ -1,12 +1,21 @@
 const express = require("express");
-const router  =  express.Router();
+const router = express.Router();
 const authController = require("../controllers/auth.controller");
 const {authenticateToken} = require("../middleware/auth.middleware");
+
+const { validator } = require("../utils/validator.utils");
+const authValidator = require("../middleware/authValidator.middleware");
+
 /**
  * @route POST /api/auth/register
  * @description Register a new user
  */
-router.post("/register", authController.register);
+router.post(
+  "/register",
+  authValidator.newUserValidator,
+  validator,
+  authController.register,
+);
 
 /**
  * @route POST /api/auth/login
