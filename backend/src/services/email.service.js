@@ -25,13 +25,13 @@ const transporter = nodeMailer.createTransport({
   },
 });
 
-// transporter.verify((error, success) => {
-//   if (error) {
-//     console.error("Error in email transporter: ", error);
-//   } else {
-//     console.log("Email transporter is ready to send emails!");
-//   }
-// });
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("Error in email transporter: ", error);
+  } else {
+    console.log("Email transporter is ready to send emails!");
+  }
+});
 
 /**
  * Generic email sender
@@ -95,38 +95,7 @@ NoteDrive Team
   await sendEmail(userEmail, subject, text, html);
 }
 
-const sendResetPasswordEmail = async (user) => {
-  const subject = "Reset Your NoteDrive Password 🔒";
-  const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${user.resetToken}`;
-
-  const text = `Hello ${user.fullName},
-
-We received a request to reset your password for your NoteDrive account.
-
-Please click the link below to reset your password:
-${resetLink}
-
-If you did not request a password reset, please ignore this email.
-
-Best Regards,
-NoteDrive Team
-`;
-
-  const html = `
-  <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
-    <div style="max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px;">
-      
-      <h2 style="color:#333;">Reset Your Password 🔒</h2>
-      
-    </div>
-  </div>
-  `;
-
-  await sendEmail(user.email, subject, text, html);
-};
-
 module.exports = {
   sendEmail,
   sendRegistrationEmail,
-  sendResetPasswordEmail,
 };

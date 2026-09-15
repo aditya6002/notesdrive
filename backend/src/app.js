@@ -4,12 +4,11 @@ const multer = require("multer");
 const { sendEmail } = require("./services/email.service");
 const app = express();
 dotenv.config();
+const cookieParser = require("cookie-parser");
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(multer().none());
-
+app.use(cookieParser());
 
 // Routes
 app.use("/dashboard", require("./routes/dashboard.routes"));

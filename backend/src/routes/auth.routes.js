@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/auth.controller");
+const {authenticateToken} = require("../middleware/auth.middleware");
 
 const { validator } = require("../utils/validator.utils");
 const authValidator = require("../middleware/authValidator.middleware");
@@ -23,21 +24,32 @@ router.post(
 router.post("/login", authController.login);
 
 /**
- * @route GET /api/auth/logout
- * @description Logout user and clear and block cookies
+ * @route POST /api/auth/logout
+ * @description Logout a user
  */
-router.get("/logout", authController.logout);
+router.post("/logout",authenticateToken ,authController.logout);
 
+/**
+ * @route POST /api/auth/forgot-password
+ * @description Forgot password - send OTP to user email
+ */
 
-// Testing route for cookie
-router.get('/getCookie',authController.getCookie)
+ router.post("/forgot-password"
+    ,authController.forgotPassword);
+ 
 
 /**
  * @route POST /api/auth/reset-password
- * @description PassWord Reset route
- * @body {email}
- * */
+ * @description Reset user password
+ */
+router.post("/verify-otp", authController.verifyOtp);   
 
-router.post("/reset-password", authController.resetPassword);
+/**
+ * @route POST /api/auth/set-password
+ * @description Set user password
+ */
+
+router.post("/set-password", authController.passwordReset);
+
 
 module.exports = router;
