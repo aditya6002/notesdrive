@@ -20,6 +20,24 @@ router.post(
  * @route POST /api/auth/login
  * @description Login a user
  */
-// router.post("/login", authController.login);
+router.post("/login", authController.login);
+
+/**
+ * @route GET /api/auth/logout
+ * @description Logout user and clear and block cookies
+ */
+router.get("/logout", authController.logout);
+
+
+// Testing route for cookie
+router.get('/getCookie',authController.getCookie)
+
+/**
+ * @route POST /api/auth/reset-password
+ * @description PassWord Reset route
+ * @body {email}
+ * */
+
+router.post("/reset-password", authController.resetPassword);
 
 module.exports = router;

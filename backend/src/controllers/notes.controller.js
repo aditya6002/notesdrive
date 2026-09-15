@@ -3,6 +3,8 @@ const noteModel = require("../models/Note.model");
 const createNote = (req, res) => {
   const data = req.body;
 
+  const { title, tags, file } = req.body;
+
   console.log(data);
   res.status(201).json({ msg: "note created", data: "new note", data: data });
 };
