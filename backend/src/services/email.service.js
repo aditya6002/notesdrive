@@ -95,7 +95,56 @@ NoteDrive Team
   await sendEmail(userEmail, subject, text, html);
 }
 
+async function sendPasswordResetEmail(userEmail, name, resetLink) {
+  const subject = "Password Reset Request for NoteDrive";
+
+  const text = `Hello ${name},
+
+We received a request to reset your password for your NoteDrive account.
+If you did not make this request, please ignore this email.
+
+To reset your password, please click the link below:
+${resetLink}
+
+Best Regards,
+NoteDrive Team
+`;
+
+  const html = `
+  <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
+    <div style="max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px;">
+      
+      <h2 style="color:#333;">Password Reset Request</h2>
+      
+      <p>Hello <b>${name}</b>,</p>
+      
+      <p>
+        We received a request to reset your password for your <b>NoteDrive</b> account.
+        If you did not make this request, please ignore this email.
+      </p>
+      
+      <p>
+        To reset your password, please click the link below:
+      </p>
+
+      <a href="${resetLink}" style="display:inline-block; padding:10px 20px; background:#007BFF; color:white; text-decoration:none; border-radius:5px;">Reset Password</a>
+
+      <hr>
+
+      <p style="color:gray; font-size:14px;">
+        Best Regards,<br>
+        <b>The NoteDrive Team</b>
+      </p>
+
+    </div>
+  </div>
+  `;
+
+  await sendEmail(userEmail, subject, text, html);
+}
+
 module.exports = {
   sendEmail,
   sendRegistrationEmail,
+  sendPasswordResetEmail,
 };

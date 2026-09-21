@@ -49,7 +49,7 @@ router.post("/verify-otp", authController.verifyOtp);
  * @description Set user password
  */
 
-router.post("/set-password", authController.passwordReset);
+router.post("/reset-password/:resetToken", authController.passwordReset);
 
 
 module.exports = router;
