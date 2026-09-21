@@ -9,6 +9,8 @@ const authValidator = require("../middleware/authValidator.middleware");
 /**
  * @route POST /api/auth/register
  * @description Register a new user
+ * @public
+ * @body { username, email, password }
  */
 router.post(
   "/register",

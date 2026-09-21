@@ -5,10 +5,12 @@ const { sendEmail } = require("./services/email.service");
 const app = express();
 dotenv.config();
 const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
 
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(morgan("dev"));
 
 // Routes
 app.use("/dashboard", require("./routes/dashboard.routes"));

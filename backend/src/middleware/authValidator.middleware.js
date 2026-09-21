@@ -8,7 +8,7 @@ const newUserValidator = [
     .withMessage(
       "Username is required and must be between 3 and 30 characters",
     ),
-  body("fullname")
+  body("fullName")
     .isString()
     .trim()
     .isLength({ min: 5, max: 80 })

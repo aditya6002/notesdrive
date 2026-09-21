@@ -21,12 +21,10 @@
     "express-validator": "^7.3.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.9.2",
+    "morgan": "^1.12.1",
     "multer": "^2.2.0",
     "nodemailer": "^9.0.5",
-<<<<<<< HEAD
-=======
     "resend": "^6.20.0",
->>>>>>> origin/main
     "routes": "^2.1.0"
   }
 }
