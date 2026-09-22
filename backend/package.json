@@ -12,6 +12,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.116.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -23,7 +24,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.9.2",
     "morgan": "^1.12.1",
-    "multer": "^2.2.0",
+    "multer": "^2.4.0",
     "nodemailer": "^9.0.5",
     "resend": "^6.20.0",
     "routes": "^2.1.0"
