@@ -2,6 +2,9 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../utils/file.utils");
+const uploadPDF = require("../middleware/pdfUpload.middleware");
+const { uploadPdf, getPdf } = require("../controllers/pdf.controller");
+const isUserLogin = require("../middleware/isUserLogin.middleware");
 
 // Middleware
 const {
@@ -28,6 +31,10 @@ router.post(
   validator,
   noteController.createNote,
 );
+
+router.post("/upload", isUserLogin, uploadPDF.single("pdf"), uploadPdf);
+
+router.get("/getPdf/:pdfId", isUserLogin, getPdf);
 
 router
   .route("/:noteId")

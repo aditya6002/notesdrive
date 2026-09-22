@@ -34,7 +34,7 @@ const newUserValidator = [
   body("session")
     .isString()
     .trim()
-    .isLength({ min: 8, max: 20 })
+    .isLength({ min: 6, max: 20 })
     .withMessage("Session is required and must be between 8 and 20 characters"),
   body("semester")
     .isNumeric()

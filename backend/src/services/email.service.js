@@ -40,40 +40,46 @@ transporter.verify((error, success) => {
 const sendEmail = async (to, subject, text, html) => {
   try {
     const info = await transporter.sendMail({
-      from: `"BACKEND LEDGER" <${process.env.EMAIL_USER}>`,
+      from: `"NotesDrive Team" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       text,
       html,
     });
-    console.log("Email sent: ", info.MessageId);
+    console.log("Email sent: ", info.messageId);
   } catch (err) {
     console.error("Error in sending email :", err);
   }
 };
 
+
+/**
+ * Send registration email to new users
+ * @param {string} userEmail - The email address of the user
+ * @param {string} name - The name of the user
+ */
 async function sendRegistrationEmail(userEmail, name) {
-  const subject = "Welcome to NoteDrive! 🎉";
+  const subject = "Welcome to NotesDrive! 🎉";
 
   const text = `Hello ${name},
 
-Thank you for registering at NoteDrive.
-We're excited to have you on board!
+        Thank you for registering at NotesDrive.
+        We're excited to have you on board!
 
-Best Regards,
-NoteDrive Team
-`;
+        Best Regards,
+        NotesDrive Team
+        `;
 
   const html = `
   <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
     <div style="max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px;">
       
-      <h2 style="color:#333;">Welcome to NoteDrive 🚀</h2>
+      <h2 style="color:#333;">Welcome to NotesDrive 🚀</h2>
       
       <p>Hello <b>${name}</b>,</p>
       
       <p>
-        Thank you for registering with <b>NoteDrive</b>. 
+        Thank you for registering with <b>NotesDrive</b>. 
         We are excited to have you as part of our community.
       </p>
       
@@ -85,7 +91,7 @@ NoteDrive Team
 
       <p style="color:gray; font-size:14px;">
         Best Regards,<br>
-        <b>The NoteDrive Team</b>
+        <b>The NotesDrive Team</b>
       </p>
 
     </div>
@@ -96,18 +102,18 @@ NoteDrive Team
 }
 
 async function sendPasswordResetEmail(userEmail, name, resetLink) {
-  const subject = "Password Reset Request for NoteDrive";
+  const subject = "Password Reset Request for NotesDrive";
 
   const text = `Hello ${name},
 
-We received a request to reset your password for your NoteDrive account.
+We received a request to reset your password for your NotesDrive account.
 If you did not make this request, please ignore this email.
 
 To reset your password, please click the link below:
 ${resetLink}
 
 Best Regards,
-NoteDrive Team
+NotesDrive Team
 `;
 
   const html = `
@@ -119,7 +125,7 @@ NoteDrive Team
       <p>Hello <b>${name}</b>,</p>
       
       <p>
-        We received a request to reset your password for your <b>NoteDrive</b> account.
+        We received a request to reset your password for your <b>NotesDrive</b> account.
         If you did not make this request, please ignore this email.
       </p>
       
@@ -133,7 +139,7 @@ NoteDrive Team
 
       <p style="color:gray; font-size:14px;">
         Best Regards,<br>
-        <b>The NoteDrive Team</b>
+        <b>The NotesDrive Team</b>
       </p>
 
     </div>
