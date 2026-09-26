@@ -73,6 +73,9 @@ const userSchema = new mongoose.Schema(
       required: true,
       immutable: true,
     },
+    interestedSubjects: {
+      type: [String],
+    },
   },
   { timestamps: true },
 );

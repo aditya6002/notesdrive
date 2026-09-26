@@ -1,5 +1,6 @@
 const supabase = require("../config/supabase.config");
 const Pdf = require("../models/pdf.model");
+const { containsBannedWord } = require("../utils/contentModeration");
 
 /**
  * @description Upload a PDF file
@@ -27,6 +28,28 @@ const uploadPdf = async (req, res) => {
         success: false,
         message: "Caption and tags are required",
       });
+    }
+
+    const caption = req.body.caption;
+
+    if (caption && containsBannedWord(caption)) {
+      return res.status(400).json({
+        success: false,
+        message: "Caption contains inappropriate content.",
+      });
+    }
+
+    const tags = req.body.tags.split(",").map((tag) => tag.trim());
+
+    if (Array.isArray(tags)) {
+      const hasBannedTag = tags.some((tag) => containsBannedWord(tag));
+
+      if (hasBannedTag) {
+        return res.status(400).json({
+          success: false,
+          message: "Tags contain inappropriate content.",
+        });
+      }
     }
 
     // 2. Get logged-in user
@@ -79,7 +102,6 @@ const uploadPdf = async (req, res) => {
       });
     }
 
-    const tags = req.body.tags.split(",").map((tag) => tag.trim());
     if (tags.length < 1) {
       return res.status(400).json({
         success: false,
@@ -88,7 +110,7 @@ const uploadPdf = async (req, res) => {
     }
 
     const uploadedPdf = await Pdf.create({
-      caption: req.body.caption,
+      caption: caption,
       pdf: {
         url: signedData.signedUrl,
         id: data.id,
