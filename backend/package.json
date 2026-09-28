@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
-  "author": "",
+  "author": "Aditya Prakash",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,7 @@
     "mongoose": "^9.9.2",
     "morgan": "^1.12.1",
     "multer": "^2.4.0",
+    "node-cron": "^4.6.0",
     "nodemailer": "^9.0.5",
     "resend": "^6.20.0",
     "routes": "^2.1.0"

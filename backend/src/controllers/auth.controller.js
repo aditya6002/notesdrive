@@ -149,8 +149,8 @@ const logout = async (req, res) => {
   try {
     const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
     await BlacklistToken.create({
-        jwtToken: token,
-        expireAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+      jwtToken: token,
+      expireAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
     });
     res.clearCookie("token");
     return res.status(200).json({ message: "User logged out successfully!" });
@@ -284,24 +284,36 @@ const passwordReset = async (req, res) => {
  * 2. check if user exists
  */
 
-async function accountDelete(req,res){
-  try{
-    const userId = req.user.id;
-    const user = await User.findById(userId);
-    if(!user){
+async function accountDelete(req, res) {
+  try {
+    const user = req.user;
+    if (!user) {
       return res.status(404).json({ message: "User not found!" });
     }
-    if(user.status == "deletion_requested" || "deleted"){
-      return res.status(400).json({ message: "Account deletion already requested or account already deleted!" });
-    };
-    const deletionRequestedAt = new Date().now;
-    const deletionScheduledAt = new Date(deletionRequestedAt.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days later
+
+    if (
+      (user &&
+        user.status != "active" &&
+        user.status == "deletion_requested") ||
+      user.status == "deleted"
+    ) {
+      return res.status(400).json({
+        message:
+          "Account deletion already requested or account already deleted!",
+      });
+    }
+    const deletionRequestedAt = new Date();
+    const deletionScheduledAt = new Date(
+      deletionRequestedAt.getTime() + 30 * 24 * 60 * 60 * 1000,
+    ); // 30 days later
     await user.updateOne({
       status: "deletion_requested",
       deletionRequestedAt: deletionRequestedAt,
       deletionScheduledAt: deletionScheduledAt,
     });
-    return res.status(200).json({ message: "Account deletion requested successfully!" });
+    return res
+      .status(200)
+      .json({ message: "Account deletion requested successfully!" });
   } catch (err) {
     return res.status(500).json({
       message: "Internal server error!",

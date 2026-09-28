@@ -76,19 +76,19 @@ const userSchema = new mongoose.Schema(
     interestedSubjects: {
       type: [String],
     },
-    status :{
-      type : String,
-      enum : ["active", "deletion_requested", "deleted"],
-      default : "active",
+    status: {
+      type: String,
+      enum: ["active", "deletion_requested", "deleted"],
+      default: "active",
     },
-    deletionRequestedAt :{
+    deletionRequestedAt: {
       type: Date,
       default: null,
     },
-    deletionScheduledAt :{
-      type : Date,
-      default : null,
-    }
+    deletionScheduledAt: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true },
 );
@@ -114,4 +114,5 @@ userSchema.methods.changePassword = async function (newPassword) {
   await this.save();
 };
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
+module.exports = User;
