@@ -76,6 +76,19 @@ const userSchema = new mongoose.Schema(
     interestedSubjects: {
       type: [String],
     },
+    status :{
+      type : String,
+      enum : ["active", "deletion_requested", "deleted"],
+      default : "active",
+    },
+    deletionRequestedAt :{
+      type: Date,
+      default: null,
+    },
+    deletionScheduledAt :{
+      type : Date,
+      default : null,
+    }
   },
   { timestamps: true },
 );

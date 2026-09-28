@@ -275,7 +275,40 @@ const passwordReset = async (req, res) => {
     });
   }
 };
+/**
+ * @route POST /api/auth/account-delete
+ * @description Request account deletion
+ * @private
+ * @header { Authorization: Bearer <token> }
+ * 1. fetch user data
+ * 2. check if user exists
+ */
 
+async function accountDelete(req,res){
+  try{
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    if(!user){
+      return res.status(404).json({ message: "User not found!" });
+    }
+    if(user.status == "deletion_requested" || "deleted"){
+      return res.status(400).json({ message: "Account deletion already requested or account already deleted!" });
+    };
+    const deletionRequestedAt = new Date().now;
+    const deletionScheduledAt = new Date(deletionRequestedAt.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days later
+    await user.updateOne({
+      status: "deletion_requested",
+      deletionRequestedAt: deletionRequestedAt,
+      deletionScheduledAt: deletionScheduledAt,
+    });
+    return res.status(200).json({ message: "Account deletion requested successfully!" });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Internal server error!",
+      error: err?.message || "Internal server error!",
+    });
+  }
+}
 module.exports = {
   register,
   login,
@@ -283,4 +316,5 @@ module.exports = {
   forgotPassword,
   verifyOtp,
   passwordReset,
+  accountDelete,
 };
