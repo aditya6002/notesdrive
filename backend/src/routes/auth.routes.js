@@ -53,5 +53,12 @@ router.post("/verify-otp", authController.verifyOtp);
 
 router.post("/reset-password/:resetToken", authController.passwordReset);
 
+/**
+ * @route POST /api/auth/account-delete
+ * @description Request account deletion
+ * @private
+ * @header { Authorization: Bearer <token> }
+ */
+router.post("/account-delete", authenticateToken, authController.accountDelete);
 
 module.exports = router;
